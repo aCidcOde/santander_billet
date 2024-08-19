@@ -59,7 +59,7 @@ Descrição das variáveis:
     * SANTANDER_BILLET_CLIENT_ID: Valor do client_id fornecido pelo Santader
     * SANTANDER_BILLET_CLIENT_SECRET: Valor do client_secret fornecido pelo Santander
     * SANTANDER_BILLET_CERTIFICATE_AUTH: Senha do certificado
-    * SANTANDER_BILLET_CERTIFICATE_PATH: Caminho do certificado dentro da pasta Storage
+    * SANTANDER_BILLET_CERTIFICATE_PATH: Caminho do certificado em formato pfx dentro da pasta Storage
 
 ## Endpoints de API
 
