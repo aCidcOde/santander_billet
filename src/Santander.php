@@ -1,6 +1,6 @@
 <?php
 
-namespace FlyCorp\SantanderBillet\providers;
+namespace FlyCorp\SantanderBillet;
 
 use GuzzleHttp\Client;
 
