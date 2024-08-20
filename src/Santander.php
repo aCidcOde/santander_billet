@@ -27,18 +27,42 @@ class Santander
         ];
     }
 
+    private function handleRequest($method, $uri, $options = [])
+    {
+        try {
+            $response = $this->client->request($method, $uri, $options);
+
+            $body = $response->getBody();
+            $data = json_decode($body, true);
+
+            return [
+                'success' => true,
+                'code' => $response->getStatusCode(),
+                'data' => $data
+            ];
+
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $responseBody = $e->getResponse()->getBody()->getContents();
+            $data = json_decode($responseBody, true);
+
+            return [
+                'success' => false,
+                'code' => $e->getResponse()->getStatusCode(),
+                'data' => $data
+                ];
+            } catch (\Exception $e) {
+                return [
+                    'success' => false,
+                    'code' => $e->getCode(),
+                    'message' => $e->getMessage(),
+                    ];
+                }
+            }
+
+
     private function retrieveToken()
     {
-        $response  = $this->client->post("auth/oauth/v2/token", $this->options);
-
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("Request failed with status {$response->getStatusCode()}");
-        }
-
-        $body = $response->getBody();
-        $data = json_decode($body, true);
-
-        return $data;
+        return $this->handleRequest('POST', 'auth/oauth/v2/token', $this->options);
     }
 
     private function token()
@@ -48,7 +72,14 @@ class Santander
         return $cached
         ? $cached
         :cache()->remember('SANTANDER_BILLET_RESPONSE', now()->addSeconds(900), function(){
-            return self::retrieveToken();
+
+            $response = self::retrieveToken();
+
+            if($response['success']){
+                return $response['data'];
+            }
+
+            throw new \Exception($response['message'], $response['code']);
         });
     }
 
@@ -69,16 +100,7 @@ class Santander
             "json" => $body
         ];
 
-        $response  = $this->client->post("collection_bill_management/v2/workspaces", $options);
-
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("Request failed with status {$response->getStatusCode()}");
-        }
-
-        $body = $response->getBody();
-        $data = json_decode($body, true);
-
-        return $data;
+        return $this->handleRequest('POST', 'collection_bill_management/v2/workspaces', $options);
     }
 
     public function searchWorkspace($workspaceId = null)
@@ -87,16 +109,7 @@ class Santander
             "headers" => self::authorizeHeaders()
         ];
 
-        $response  = $this->client->get($workspaceId ? "collection_bill_management/v2/workspaces/{$workspaceId}" : "collection_bill_management/v2/workspaces", $options);
-
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("Request failed with status {$response->getStatusCode()}");
-        }
-
-        $body = $response->getBody();
-        $data = json_decode($body, true);
-
-        return $data;
+        return $this->handleRequest('GET', $workspaceId ? "collection_bill_management/v2/workspaces/{$workspaceId}" : "collection_bill_management/v2/workspaces", $options);
     }
 
     public function deleteWorkspace($workspaceId)
@@ -105,16 +118,7 @@ class Santander
             "headers" => self::authorizeHeaders()
         ];
 
-        $response  = $this->client->delete("collection_bill_management/v2/workspaces/{$workspaceId}", $options);
-
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("Request failed with status {$response->getStatusCode()}");
-        }
-
-        $body = $response->getBody();
-        $data = json_decode($body, true);
-
-        return $data;
+        return $this->handleRequest('DELETE', "collection_bill_management/v2/workspaces/{$workspaceId}", $options);
     }
 
     public function updateWorkspace($workspaceId, $body = [])
@@ -124,16 +128,7 @@ class Santander
             "json" => $body
         ];
 
-        $response  = $this->client->patch("collection_bill_management/v2/workspaces/{$workspaceId}", $options);
-
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("Request failed with status {$response->getStatusCode()}");
-        }
-
-        $body = $response->getBody();
-        $data = json_decode($body, true);
-
-        return $data;
+        return $this->handleRequest('PATCH', "collection_bill_management/v2/workspaces/{$workspaceId}", $options);
     }
 
     public function registerBill($workspaceId, array $body = [])
@@ -143,16 +138,7 @@ class Santander
             "json" => $body
         ];
 
-        $response  = $this->client->post("collection_bill_management/v2/workspaces/{$workspaceId}/bank_slips", $options);
-
-        if(!in_array($response->getStatusCode(), [200, 201, 202, 203, 204, 205, 206])){
-            throw new \Exception("Request failed with status {$response->getStatusCode()}");
-        }
-
-        $body = $response->getBody();
-        $data = json_decode($body, true);
-
-        return $data;
+        return $this->handleRequest('POST', "collection_bill_management/v2/workspaces/{$workspaceId}/bank_slips", $options);
     }
 
     public function updateBillInstructions($workspaceId, array $body = [])
@@ -162,16 +148,7 @@ class Santander
             "json" => $body
         ];
 
-        $response  = $this->client->patch("collection_bill_management/v2/workspaces/{$workspaceId}/bank_slips", $options);
-
-        if(!in_array($response->getStatusCode(), [200, 201, 202, 203, 204, 205, 206])){
-            throw new \Exception("Request failed with status {$response->getStatusCode()}");
-        }
-
-        $body = $response->getBody();
-        $data = json_decode($body, true);
-
-        return $data;
+        return $this->handleRequest('PATCH', "collection_bill_management/v2/workspaces/{$workspaceId}/bank_slips", $options);
     }
 
     public function getPdfBill($billId, $body)
@@ -182,16 +159,7 @@ class Santander
             "json" => $body
         ];
 
-        $response  = $this->client->post("collection_bill_management/v2/bills/{$billId}/bank_slips", $options);
-
-        if(!in_array($response->getStatusCode(), [200, 201, 202, 203, 204, 205, 206])){
-            throw new \Exception("Request failed with status {$response->getStatusCode()}");
-        }
-
-        $body = $response->getBody();
-        $data = json_decode($body, true);
-
-        return $data;
+        return $this->handleRequest('POST', "collection_bill_management/v2/bills/{$billId}/bank_slips", $options);
     }
 
     public function simpleSearchBySonda($workspaceId, $bankSlip)
@@ -200,16 +168,7 @@ class Santander
             "headers" => self::authorizeHeaders()
         ];
 
-        $response  = $this->client->get("collection_bill_management/v2/workspaces/{$workspaceId}/bank_slips/{$bankSlip}", $options);
-
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("Request failed with status {$response->getStatusCode()}");
-        }
-
-        $body = $response->getBody();
-        $data = json_decode($body, true);
-
-        return $data;
+        return $this->handleRequest('GET', "collection_bill_management/v2/workspaces/{$workspaceId}/bank_slips/{$bankSlip}", $options);
     }
 
     public function detailedSearchByNn($beneficiaryCode, $bankNumber)
@@ -222,16 +181,7 @@ class Santander
             ],
         ];
 
-        $response  = $this->client->get("collection_bill_management/v2/bills", $options);
-
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("Request failed with status {$response->getStatusCode()}");
-        }
-
-        $body = $response->getBody();
-        $data = json_decode($body, true);
-
-        return $data;
+        return $this->handleRequest('GET', "collection_bill_management/v2/bills", $options);
     }
 
     public function detailedSearchBySn($beneficiaryCode, $bankNumber, $dueDate, $nominalValue)
@@ -246,16 +196,7 @@ class Santander
             ],
         ];
 
-        $response  = $this->client->get("collection_bill_management/v2/bills", $options);
-
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("Request failed with status {$response->getStatusCode()}");
-        }
-
-        $body = $response->getBody();
-        $data = json_decode($body, true);
-
-        return $data;
+        return $this->handleRequest('GET', "collection_bill_management/v2/bills", $options);
     }
 
     public function detailedSearchBySearchType($billId, $searchType)
@@ -267,15 +208,6 @@ class Santander
             ],
         ];
 
-        $response  = $this->client->get("collection_bill_management/v2/bills/{$billId}", $options);
-
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("Request failed with status {$response->getStatusCode()}");
-        }
-
-        $body = $response->getBody();
-        $data = json_decode($body, true);
-
-        return $data;
+        return $this->handleRequest('GET', "collection_bill_management/v2/bills/{$billId}", $options);
     }
 }
