@@ -156,7 +156,7 @@ Descrição das variáveis:
             "deductionValue" => "0.10",
             "paymentType" => "REGISTRO",
             "key" => [#ESTA CHAVE É NECESSÁRIA PARA GERAR O QR-CODE
-                "type" => "CNPJ",
+                "type" => "CNPJ",#TIPOS ACEITOS (CPF, CNPJ, CELULAR, EMAIL, EVP)
                 "dictKey" => "00000000000000"#CNPJ SEM MÁSCARA
             ],
             "writeOffQuantityDays" => "30",
