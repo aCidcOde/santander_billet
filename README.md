@@ -130,8 +130,8 @@ Descrição das variáveis:
             "environment" => "sandbox",
             "nsuCode" => 1014,
             "nsuDate" => "2023-05-09",
-            "covenantCode" => 3567206,
-            "bankNumber" => "1014",
+            "covenantCode" => 0000001,#INFORME O SEU
+            "bankNumber" => "1014",#INFORME O SEU
             "clientNumber" => "123",
             "dueDate" => "2023-05-09",
             "issueDate" => "2023-05-09",
@@ -155,6 +155,10 @@ Descrição das variáveis:
             "documentKind" => "DUPLICATA_MERCANTIL",
             "deductionValue" => "0.10",
             "paymentType" => "REGISTRO",
+            "key" => [#ESTA CHAVE É NECESSÁRIA PARA GERAR O QR-CODE
+                "type" => "CNPJ",
+                "dictKey" => "00000000000000"#CNPJ SEM MÁSCARA
+            ],
             "writeOffQuantityDays" => "30",
             "messages" => [
                 "mensagem um",
