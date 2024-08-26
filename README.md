@@ -74,7 +74,7 @@ Descrição das variáveis:
         "type" => "BILLING",
         "covenants" => [
             [
-                "code" => 3567206
+                "code" => 0000001
             ]
         ],
         "description" => "Testando",
@@ -109,7 +109,7 @@ Descrição das variáveis:
    $body = [
         "covenants" => [
             [
-                "code" => 3567206
+                "code" => 0000001
             ]
         ],
         "description" => "Testando"
@@ -175,7 +175,7 @@ Descrição das variáveis:
    $santanderIntegration = new Santander;
 
    $body = [
-        "covenantCode" => "3567206",
+        "covenantCode" => "0000001",
         "bankNumber" => "123",
         "operation" => "BAIXAR"
     ];
@@ -189,7 +189,7 @@ Descrição das variáveis:
    ```php
    $santanderIntegration = new Santander;
 
-   $billId = "3567206.1005";
+   $billId = "0000001.1005";
 
    $body = [
         "payerDocumentNumber" => "94620639079",
@@ -251,7 +251,7 @@ Descrição das variáveis:
    ```php
    $santanderIntegration = new Santander;
 
-   $billId = "3567206.1005";
+   $billId = "0000001.1005";
 
    #Valores para type (bankslips, default, duplicate, registry, settlement)
    $data = $santanderIntegration->detailedSearchBySearchType($billId, $type);
