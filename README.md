@@ -127,7 +127,7 @@ Descrição das variáveis:
    $santanderIntegration = new Santander;
    
    $bill = [
-            "environment" => "sandbox",
+            "environment" => "sandbox",# Valores aceitos(sandbox, PRODUCAO)
             "nsuCode" => 1014,
             "nsuDate" => "2023-05-09",
             "covenantCode" => 0000001,#INFORME O SEU
