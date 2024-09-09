@@ -256,8 +256,8 @@ Descrição das variáveis:
    #Valores para type (bankslips, default, duplicate, registry, settlement)
    #A. default: Pesquisa padrão, trazendo somente dados básicos do boleto
    #B. duplicate: Pesquisa de dados para emissão de segunda via de boleto
-   #C. bankslip: Pesquisa para dados compleos do boleto
-   #D. setlement: Pesquisa para inormações de baixas/liquidações do boleto
-   #E. registry: Pesquisa de inormações de cartório no boleto
+   #C. bankslip: Pesquisa para dados completos do boleto
+   #D. setlement: Pesquisa para informações de baixas/liquidações do boleto
+   #E. registry: Pesquisa de informações de cartório no boleto
    $data = $santanderIntegration->detailedSearchBySearchType($billId, $type);
    ```
