@@ -124,50 +124,43 @@ Descrição das variáveis:
 1. [POST] Registrar boleto */collection_bill_management/v2/workspaces/{workspace_id}/bank_slips*:
 
    ```php
+   $billet = new Billet();
    $santanderIntegration = new Santander;
-   
-   $bill = [
-            "environment" => "sandbox",# Valores aceitos(sandbox, PRODUCAO)
-            "nsuCode" => 1014,
-            "nsuDate" => "2023-05-09",
-            "covenantCode" => 0000001,#INFORME O SEU
-            "bankNumber" => "1014",#INFORME O SEU
-            "clientNumber" => "123",
-            "dueDate" => "2023-05-09",
-            "issueDate" => "2023-05-09",
-            "participantCode" => "teste liq abat",
-            "nominalValue" => 1.00,
-            "payer" => [
-                "name" => "João da Silva santos",
-                "documentType" => "CPF",
-                "documentNumber" => "94620639079",
-                "address" => "rua nove de janeiro",
-                "neighborhood" => "bela vista",
-                "city" => "sao paulo",
-                "state" => "SP",
-                "zipCode" => "05134-897"
-            ],
-            "beneficiary" => [
-                "name" => "João da Silva",
-                "documentType" => "CNPJ",
-                "documentNumber" => "20201210000155"
-            ],
-            "documentKind" => "DUPLICATA_MERCANTIL",
-            "deductionValue" => "0.10",
-            "paymentType" => "REGISTRO",
-            "key" => [#ESTA CHAVE É NECESSÁRIA PARA GERAR O QR-CODE
-                "type" => "CNPJ",#TIPOS ACEITOS (CPF, CNPJ, CELULAR, EMAIL, EVP)
-                "dictKey" => "00000000000000"#CNPJ SEM MÁSCARA
-            ],
-            "writeOffQuantityDays" => "30",
-            "messages" => [
-                "mensagem um",
-                "mensagem dois"
-            ]
-        ];
+
+   $billet->setEnvironment("sandbox")# Valores aceitos(sandbox, PRODUCAO)
+        ->setNsuCode(1014)
+        ->setNsuDate("2023-05-09")
+        ->setCovenantCode("0000001")#INFORME O SEU
+        ->setBankNumber("1014")#INFORME O SEU
+        ->setClientNumber("123")
+        ->setDueDate("2023-05-09")
+        ->setIssueDate("2023-05-09")
+        ->setParticipantCode("teste liq abat")
+        ->setNominalValue(1.00)
+        ->payer()
+            ->setName("Fulano")
+            ->setDocumentType("CPF")
+            ->setDocumentNumber("94620639079")
+            ->setAddress("rua nove de janeiro")
+            ->setNeighborhood("bela vista")
+            ->setCity("sao paulo")
+            ->setState("SP")
+            ->setZipCode("05134-897")
+        ->beneficiary()
+            ->setName("Ciclano")
+            ->setDocumentType("CNPJ")
+            ->setDocumentNumber("20201210000155")
+        ->setDocumentKind("DUPLICATA_MERCANTIL")
+        ->setDeductionValue(0.10)
+        ->setPaymentType("REGISTRO")
+        ->key()#ESTA CHAVE É NECESSÁRIA PARA GERAR O QR-CODE
+            ->setType("CNPJ")#TIPOS ACEITOS (CPF, CNPJ, CELULAR, EMAIL, EVP)
+            ->setDictKey("00000000000000")#CNPJ SEM MÁSCARA
+        ->setWriteOffQuantityDays("30")
+        ->setMessages(["mensagem um", "mensagem dois"]);
 
     #Forneça o workspace_id e body da requisição
-    $data = $santanderIntegration->registerBill('5ca21612-ee50-4626-b2da-e66ca35c605f', $bill);
+    $data = $santanderIntegration->registerBill('5ca21612-ee50-4626-b2da-e66ca35c605f', $billet->toArray());
    ```
 2. [PATCH] Atualizar instruções */collection_bill_management/v2/workspaces/{workspace_id}/bank_slips*:
 
