@@ -71,7 +71,10 @@ class Billet {
     public function setWriteOffQuantityDays($writeOffQuantityDays) { $this->writeOffQuantityDays = $writeOffQuantityDays; return $this; }
     public function setMessages($messages) { $this->messages = $messages; return $this; }
     
-    public function payer() { return $this->payer; }
-    public function beneficiary() { return $this->beneficiary; }
-    public function key() { return $this->key; }
+//    public function payer() { return $this->payer; }
+//    public function beneficiary() { return $this->beneficiary; }
+//    public function key() { return $this->key; }
+    public function payer($payer) { $this->payer = $payer; }
+    public function beneficiary($beneficiary) { $this->beneficiary = $beneficiary; }
+    public function key($key) { $this->key = $key; }
 }

@@ -12,10 +12,17 @@ class Santander
     {
         $certificatePath = storage_path(config('santander_billet.integrations.certificate_path'));
 
+//        $this->client = new Client([
+//            'base_uri' => config('santander_billet.integrations.host'),
+//            'cert' => [$certificatePath, config('santander_billet.integrations.certificate_auth')],
+//            'curl' => [CURLOPT_SSLCERTTYPE => 'P12'],
+//        ]);
+
         $this->client = new Client([
             'base_uri' => config('santander_billet.integrations.host'),
-            'cert' => [$certificatePath, config('santander_billet.integrations.certificate_auth')],
-            'curl' => [CURLOPT_SSLCERTTYPE => 'P12'],
+            'cert' => storage_path() . config('santander_billet.integrations.certificate_path'),
+            'ssl_key' =>  storage_path() . config('santander_billet.integrations.certificate_auth'),
+            'curl' => [CURLOPT_SSLCERTTYPE => 'PEM'],
         ]);
 
         $this->options = [
