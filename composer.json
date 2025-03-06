@@ -1,5 +1,5 @@
 {
-  "name": "acidcode/santander-billet",
+  "name": "flycorp/santander-billet",
   "description": "Integração com API de boletos do Santander",
   "license": "MIT",
   "version": "0.0.1",
@@ -11,26 +11,20 @@
   ],
   "require": {
     "php": "^7.2.5|^8.0",
-    "guzzlehttp/guzzle": "^7.0 || ^8.0"
+    "guzzlehttp/guzzle": "^7.3"
   },
   "autoload": {
     "psr-4": {
-      "Acidcode\\SantanderBillet\\": "src/"
+      "FlyCorp\\SantanderBillet\\": "src/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "Acidcode\\SantanderBillet\\Providers\\SantanderBilletServiceProvider"
+        "FlyCorp\\SantanderBillet\\providers\\SantanderBilletServiceProvider"
       ]
     }
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/acidcode/santander-billet.git"
-    }
-  ],
   "minimum-stability": "dev",
   "prefer-stable": true
 }
