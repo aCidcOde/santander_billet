@@ -1,6 +1,6 @@
 <?php
 
-namespace FlyCorp\SantanderBillet;
+namespace Acidcode\SantanderBillet;
 
 class Key {
     private $type;

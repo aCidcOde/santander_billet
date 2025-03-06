@@ -20,14 +20,14 @@ Use o gerenciador de pacotes COMPOSER para incluir as dependéncias  ao seu proj
 Comando a execultar:
 
 ```
-composer require flycorp/santander-billet
+composer require Acidcode/santander-billet
 ```
 Ou, em seu 'composer.json' adicione:
 
 ```json
 {
     "require": {
-        "flycorp/santander-billet": "dev-main"
+        "Acidcode/santander-billet": "dev-main"
     }
 }
 ```
@@ -37,11 +37,11 @@ Em seguida, execute o comando de instalação do gerenciador de pacotes:
 
 Em seguida, publique o arquivo de configuração do pacote em config\santander_billet.php:
 
-    php artisan vendor:publish --provider="FlyCorp\SantanderBillet\providers\SantanderBilletServiceProvider" --tag=config
+    php artisan vendor:publish --provider="Acidcode\SantanderBillet\providers\SantanderBilletServiceProvider" --tag=config
 
 Lembre-se de realizar a importação da classe Santander quando for utilizar o pacote:
 
-    use FlyCorp\SantanderBillet\Santander;
+    use Acidcode\SantanderBillet\Santander;
 
 ## Variáveis de ambiente
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace FlyCorp\SantanderBillet;
+namespace Acidcode\SantanderBillet;
 
-use FlyCorp\SantanderBillet\Key;
-use FlyCorp\SantanderBillet\Payer;
-use FlyCorp\SantanderBillet\Beneficiary;
+use Acidcode\SantanderBillet\Key;
+use Acidcode\SantanderBillet\Payer;
+use Acidcode\SantanderBillet\Beneficiary;
 
 class Billet {
     private $environment;
@@ -71,9 +71,6 @@ class Billet {
     public function setWriteOffQuantityDays($writeOffQuantityDays) { $this->writeOffQuantityDays = $writeOffQuantityDays; return $this; }
     public function setMessages($messages) { $this->messages = $messages; return $this; }
     
-//    public function payer() { return $this->payer; }
-//    public function beneficiary() { return $this->beneficiary; }
-//    public function key() { return $this->key; }
     public function payer($payer) { $this->payer = $payer; }
     public function beneficiary($beneficiary) { $this->beneficiary = $beneficiary; }
     public function key($key) { $this->key = $key; }

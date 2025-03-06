@@ -1,6 +1,6 @@
 <?php
 
-namespace FlyCorp\SantanderBillet;
+namespace Acidcode\SantanderBillet;
 
 use GuzzleHttp\Client;
 
@@ -11,12 +11,6 @@ class Santander
     public function __construct()
     {
         $certificatePath = storage_path(config('santander_billet.integrations.certificate_path'));
-
-//        $this->client = new Client([
-//            'base_uri' => config('santander_billet.integrations.host'),
-//            'cert' => [$certificatePath, config('santander_billet.integrations.certificate_auth')],
-//            'curl' => [CURLOPT_SSLCERTTYPE => 'P12'],
-//        ]);
 
         $this->client = new Client([
             'base_uri' => config('santander_billet.integrations.host'),

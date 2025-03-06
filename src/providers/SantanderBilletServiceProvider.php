@@ -1,6 +1,6 @@
 <?php
 
-namespace FlyCorp\SantanderBillet\providers;
+namespace Acidcode\SantanderBillet\providers;
 
 use Illuminate\Support\ServiceProvider;
 
